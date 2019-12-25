@@ -29,9 +29,9 @@ public:
     Equation(const map<string, double, greater<string>> &other);
     void addTerm(Term term);
     void unifyEquation(Equation &other);
-    Equation operator * (double coff);
-    Equation operator + (Equation B);
-    Equation operator - (Equation B);
+    friend Equation operator * (double coff, Equation A);
+    friend Equation operator + (Equation A, Equation B);
+    friend Equation operator - (Equation A, Equation B);
 
     friend ostream& operator<< (ostream& out, const Equation &Eq);
     ~Equation();

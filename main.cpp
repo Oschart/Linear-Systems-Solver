@@ -9,5 +9,8 @@ int main()
     string s;
     cin >> s;
     Equation A(s);
-    cout << A*2;
+    Equation B = 2*A;
+    cout << B;
+    cout << B + A;
+    cout << A;
 }

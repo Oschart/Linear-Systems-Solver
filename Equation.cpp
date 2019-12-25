@@ -16,10 +16,7 @@ Equation::Equation(const map<string, double, greater<string>> &other)
 
 void Equation::addTerm(Term term)
 {
-    if (terms.find(term.symbol) != terms.end())
-    {
-        terms[term.symbol] = term.coff;
-    }
+    terms[term.symbol] = terms[term.symbol] + term.coff;
 }
 
 void clearSpaces(string &s)
@@ -98,18 +95,18 @@ void Equation::unifyEquation(Equation &other)
 {
     for (auto it : terms)
     {
-        other.addTerm(Term(it.first, it.second));
+        other.addTerm(Term(it.first, 0));
     }
 
     for (auto it : other.terms)
     {
-        this->addTerm(Term(it.first, it.second));
+        this->addTerm(Term(it.first, 0));
     }
 }
 
-Equation Equation::operator*(double coff)
+Equation operator*(double coff, Equation A)
 {
-    map<string, double, greater<string>> newTerms(terms);
+    map<string, double, greater<string>> newTerms(A.terms);
     for (auto &term : newTerms)
     {
         term.second *= coff;
@@ -117,10 +114,9 @@ Equation Equation::operator*(double coff)
     return Equation(newTerms);
 }
 
-Equation Equation::operator+(Equation B)
+Equation operator+(Equation A, Equation B)
 {
-    Equation A(terms);
-    unifyEquation(B);
+    A.unifyEquation(B);
     for (auto &it : A.terms)
     {
         it.second += B.terms[it.first];
@@ -128,10 +124,9 @@ Equation Equation::operator+(Equation B)
     return A;
 }
 
-Equation Equation::operator-(Equation B)
+Equation operator-(Equation A, Equation B)
 {
-    Equation A(terms);
-    unifyEquation(B);
+    A.unifyEquation(B);
     for (auto &it : A.terms)
     {
         it.second -= B.terms[it.first];
