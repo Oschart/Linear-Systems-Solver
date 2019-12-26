@@ -113,6 +113,7 @@ Term Equation::getPivot()
             return Term(it.first, it.second);
         }
     }
+    return Term("", 0);
 }
 
 double Equation::getConst()

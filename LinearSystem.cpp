@@ -8,10 +8,10 @@ LinearSystem::LinearSystem(vector<Equation> _AugMat)
 
 void LinearSystem::partialPivot(int st)
 {
-    sort(AugMat.begin() + st, AugMat.end(), comp);
+    sort(AugMat.begin() + st, AugMat.end(), compEq);
 }
 
-bool comp(Equation &x, Equation &y)
+bool LinearSystem::compEq(Equation &x, Equation &y)
 {
     return abs(x.getPivot().coff) > abs(y.getPivot().coff);
 }

@@ -1,16 +1,23 @@
 #include <iostream>
 #include <string>
-#include "Equation.h"
+#include "LinearSystem.h"
 
 using namespace std;
 
 int main()
 {
-    string s;
-    cin >> s;
-    Equation A(s);
-    Equation B = 2*A;
-    cout << B;
-    cout << B + A;
-    cout << A;
+    cout << "Insert your equations, bruh \n";
+    string eq;
+    vector<Equation> Eqs;
+    while(getline(cin, eq) && !eq.empty())
+    {
+        Eqs.push_back(Equation(eq));
+    }
+    LinearSystem system(Eqs);
+
+    map<string, double> sol = system.solve();
+    for(auto it: sol)
+    {
+        cout << it.first << " = " << it.second << endl;
+    }
 }

@@ -17,6 +17,7 @@ private:
     int echelonReduce();
     void unifyVariables();
     void backSub();
+    static bool compEq(Equation &x, Equation &y);
 public:
     LinearSystem(vector<Equation> _AugMat);
     map<string, double> solve();
@@ -24,6 +25,6 @@ public:
 };
 
 
-
+#include "LinearSystem.cpp"
 
 #endif
