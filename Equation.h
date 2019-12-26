@@ -29,6 +29,9 @@ public:
     Equation(const map<string, double, greater<string>> &other);
     void addTerm(Term term);
     void unifyEquation(Equation &other);
+    Term getPivot();
+    double getConst();
+    void substitute(map<string, double> subs);
     friend Equation operator * (double coff, Equation A);
     friend Equation operator + (Equation A, Equation B);
     friend Equation operator - (Equation A, Equation B);

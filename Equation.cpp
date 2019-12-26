@@ -104,6 +104,32 @@ void Equation::unifyEquation(Equation &other)
     }
 }
 
+Term Equation::getPivot()
+{
+    for (auto it : terms)
+    {
+        if (it.second > 0)
+        {
+            return Term(it.first, it.second);
+        }
+    }
+}
+
+double Equation::getConst()
+{
+    return terms[""];
+}
+
+void Equation::substitute(map<string, double> subs)
+{
+    for (auto it : subs)
+    {
+        double c = terms[it.first]*it.second;
+        terms[it.first] = 0.0;
+        terms[""] -= c;
+    }
+}
+
 Equation operator*(double coff, Equation A)
 {
     map<string, double, greater<string>> newTerms(A.terms);
