@@ -31,6 +31,7 @@ public:
     void unifyEquation(Equation &other);
     Term getPivot();
     double getConst();
+    double getCoff(string varname);
     void substitute(map<string, double> subs);
     friend Equation operator * (double coff, Equation A);
     friend Equation operator + (Equation A, Equation B);

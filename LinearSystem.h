@@ -17,7 +17,9 @@ private:
     int echelonReduce();
     void unifyVariables();
     void backSub();
+    void printSystem();
     static bool compEq(Equation &x, Equation &y);
+
 public:
     LinearSystem(vector<Equation> _AugMat);
     map<string, double> solve();

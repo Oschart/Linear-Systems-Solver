@@ -2,6 +2,9 @@
 #include <algorithm>
 using namespace std;
 
+#define EPS 1e-5
+#define isZero(x) (abs(x) <= EPS)
+
 Equation::Equation(string eq)
 {
     terms = parseEquation(eq);
@@ -108,12 +111,17 @@ Term Equation::getPivot()
 {
     for (auto it : terms)
     {
-        if (it.second > 0)
+        if (!isZero(it.second) && it.first != "")
         {
             return Term(it.first, it.second);
         }
     }
     return Term("", 0);
+}
+
+double Equation::getCoff(string varname)
+{
+    return terms[varname];
 }
 
 double Equation::getConst()
@@ -172,7 +180,7 @@ ostream &operator<<(ostream &out, const Equation &Eq)
             {
                 out << (it.second > 0 ? "+ " : "- ");
             }
-            out << it.second << it.first << " ";
+            out << abs(it.second) << it.first << " ";
             firstTerm = false;
         }
     }

@@ -18,13 +18,13 @@ bool LinearSystem::compEq(Equation &x, Equation &y)
 
 int LinearSystem::echelonReduce()
 {
-
+    int t;
     for (int i = 0; i < AugMat.size(); ++i)
     {
         partialPivot(i);
         Equation &A = AugMat[i];
-        double pivotA = A.getPivot().coff;
-        if (pivotA == 0)
+        Term pivotA = A.getPivot();
+        if (pivotA.coff == 0)
         {
             cout << "System has infinitely many solutions\n";
             return 0;
@@ -32,8 +32,8 @@ int LinearSystem::echelonReduce()
         for (int j = i + 1; j < AugMat.size(); ++j)
         {
             Equation &B = AugMat[j];
-            double pivotB = B.getPivot().coff;
-            B = B - (pivotB / pivotA) * A;
+            double coffB = B.getCoff(pivotA.symbol);
+            B = B - (coffB / pivotA.coff) * A;
         }
     }
     return 1;
@@ -55,10 +55,21 @@ void LinearSystem::backSub()
     }
 }
 
+void LinearSystem::printSystem()
+{
+
+    for (auto it: AugMat)
+    {
+        cout << it;
+    }
+}
+
 map<string, double> LinearSystem::solve()
 {
     map<string, double> sol;
     int res = echelonReduce();
+    //cout << "RREF Done\n";
+    //printSystem();
     if (res == 1)
     {
         backSub();
