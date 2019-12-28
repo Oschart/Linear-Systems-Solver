@@ -28,7 +28,7 @@ public:
     Equation(string eq);
     Equation(const map<string, double, greater<string>> &other);
     void addTerm(Term term);
-    void unifyEquation(Equation &other);
+    friend set<string> varsUnion(const Equation &A, const Equation &B);
     Term getPivot();
     double getConst();
     double getCoff(string varname);

@@ -15,7 +15,6 @@ private:
     vector<Equation> AugMat;
     void partialPivot(int st);
     int echelonReduce();
-    void unifyVariables();
     void backSub();
     void printSystem();
     static bool compEq(Equation &x, Equation &y);

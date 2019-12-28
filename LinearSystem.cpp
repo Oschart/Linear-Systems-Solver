@@ -3,7 +3,6 @@
 LinearSystem::LinearSystem(vector<Equation> _AugMat)
 {
     AugMat = _AugMat;
-    unifyVariables();
 }
 
 void LinearSystem::partialPivot(int st)
@@ -26,7 +25,7 @@ int LinearSystem::echelonReduce()
         Term pivotA = A.getPivot();
         if (pivotA.coff == 0)
         {
-            cout << "System has infinitely many solutions\n";
+            cout << "System has no or infinitely many solutions\n";
             return 0;
         }
         for (int j = i + 1; j < AugMat.size(); ++j)
@@ -84,15 +83,6 @@ map<string, double> LinearSystem::solve()
     return sol;
 }
 
-void LinearSystem::unifyVariables()
-{
-    if (AugMat.size() < 2)
-        return;
-    for (int i = 1; i < AugMat.size(); ++i)
-    {
-        AugMat[i].unifyEquation(AugMat[i - 1]);
-    }
-}
 
 LinearSystem::~LinearSystem()
 {

@@ -3,14 +3,16 @@
 #include <string>
 #include <chrono>
 #include "LinearSystem.h"
+#include "test_generator.cpp"
 
 using namespace std;
 
 int main()
 {
+    
     cout << "Insert your equations, bruh \n";
     //freopen("13-equations.txt", "r", stdin);
-    ifstream in("13-equations.txt");
+    ifstream in("test.txt");
     string eq;
     vector<Equation> Eqs;
     while(getline(in, eq) && !eq.empty())
@@ -30,4 +32,10 @@ int main()
     cout << "==================================\n";
     cout << "Time taken = " << chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/1000.0 << " milliseconds" << std::endl;
     cout << "==================================\n";
+    
+   /*
+   int n;
+   cin >> n;
+   writeRandomTest(n, "test.txt");*/
+   
 }

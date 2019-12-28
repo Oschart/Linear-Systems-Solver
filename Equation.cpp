@@ -35,6 +35,7 @@ void clearSpaces(string &s)
 
 map<string, double, greater<string>> Equation::parseEquation(string eq)
 {
+    clearSpaces(eq);
     if (eq[0] != '+' && eq[0] != '-')
         eq = "+" + eq;
     map<string, double, greater<string>> res;
@@ -94,17 +95,18 @@ Term Equation::stringToTerm(string term)
     return Term("", coff);
 }
 
-void Equation::unifyEquation(Equation &other)
+set<string> varsUnion(const Equation &A, const Equation &B)
 {
-    for (auto it : terms)
+    set<string> varnames;
+    for (auto it : A.terms)
     {
-        other.addTerm(Term(it.first, 0));
+        varnames.insert(it.first);
     }
-
-    for (auto it : other.terms)
+    for (auto it : B.terms)
     {
-        this->addTerm(Term(it.first, 0));
+        varnames.insert(it.first);
     }
+    return varnames;
 }
 
 Term Equation::getPivot()
@@ -151,20 +153,20 @@ Equation operator*(double coff, Equation A)
 
 Equation operator+(Equation A, Equation B)
 {
-    A.unifyEquation(B);
-    for (auto &it : A.terms)
+    set<string> varnames = varsUnion(A, B);
+    for (auto &it : varnames)
     {
-        it.second += B.terms[it.first];
+        A.terms[it] += B.terms[it];
     }
     return A;
 }
 
 Equation operator-(Equation A, Equation B)
 {
-    A.unifyEquation(B);
-    for (auto &it : A.terms)
+    set<string> varnames = varsUnion(A, B);
+    for (auto &it : varnames)
     {
-        it.second -= B.terms[it.first];
+        A.terms[it] -= B.terms[it];
     }
     return A;
 }
@@ -174,18 +176,19 @@ ostream &operator<<(ostream &out, const Equation &Eq)
     bool firstTerm = true;
     for (auto it : Eq.terms)
     {
-        if (it.first != "")
+        if (it.first != "" && !isZero(it.second))
         {
-            if (!firstTerm)
+            if (!firstTerm || it.second < 0)
             {
                 out << (it.second > 0 ? "+ " : "- ");
             }
-            out << abs(it.second) << it.first << " ";
+            if(abs(it.second) != 1) out << abs(it.second);
+            out << it.first << " ";
             firstTerm = false;
         }
     }
-
-    out << "= " << Eq.terms.find("")->second << endl;
+    double constTerm = Eq.terms.find("")->second;
+    out << "= " << (constTerm == 0.0? abs(constTerm): constTerm) << endl;
     return out;
 }
 
