@@ -33,7 +33,7 @@ vector<string> randomNames(int n)
     for(int i = 0; i < n; ++i)
     {
         string s;
-        s += rand()%32 + 'a';
+        s += rand()%26 + 'a';
         int len = rand()%4;
         while(len--)
         {
