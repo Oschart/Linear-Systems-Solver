@@ -45,7 +45,7 @@ int main()
         cout << it.first << " = " << it.second << endl;
     }
     cout << "==================================\n";
-    cout << "Time taken = " << chrono::duration_cast<std::chrono::microseconds>(end - begin).count() / 1000.0 << " milliseconds" << std::endl;
+    cout << "Time taken = " << chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/1000.0 << " milliseconds" << endl;
     cout << "==================================\n";
 
     /*
